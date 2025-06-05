@@ -65,7 +65,7 @@ jobs:
           path: ./dist
       - name: Output contents
         run: ls
-      - name: Deploy site
+      - name: Deploy a JS site
         id: deploy-js
         uses: ./.github/actions/deploy-s3-javascript
         env:
@@ -74,15 +74,15 @@ jobs:
         with:
           bucket: gha-ecustom-action-hosting
           dist-folder: ./dist
-      # - name: Deploy site
-      # id: deploy-docker
-      # uses: ./.github/actions/deploy-s3-docker
-      # env:
-      #   AWS_ACCESS_KEY_ID:
-      #   AWS_SECRET_ACCESS_KEY: 
-      # with:
-      #   bucket: gha-ecustom-action-hosting
-      #   dist-folder: ./dist
+      - name: Deploy a docker site
+        id: deploy-docker
+        uses: ./.github/actions/deploy-s3-docker
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        with:
+          bucket: gha-ecustom-action-hosting
+          dist-folder: ./dist
       # bucket-region: us-east-2
       - name: Output information
         run: |
