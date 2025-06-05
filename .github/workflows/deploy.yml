@@ -11,9 +11,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Load & cache dependencies
         id: cache-deps
-        uses: github-actions-account/my-action@v1
+        uses: ./.github/actions/cached-deps
         with:
-          caching: "false"
+          caching: 'false'
       - name: Output information
         run: echo "Cache used? ${{ steps.cache-deps.outputs.used-cache }}"
       - name: Lint code
@@ -24,7 +24,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Load & cache dependencies
-        uses: github-actions-account/my-action@v1
+        uses: ./.github/actions/cached-deps
       - name: Test code
         id: run-tests
         run: npm run test
@@ -41,7 +41,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Load & cache dependencies
-        uses: github-actions-account/my-action@v1
+        uses: ./.github/actions/cached-deps
       - name: Build website
         run: npm run build
       - name: Upload artifacts
@@ -67,7 +67,7 @@ jobs:
         run: ls
       - name: Deploy site
         id: deploy
-        uses: github-actions-s3-docker/my-action@v1
+        uses: ./.github/actions/deploy-s3-docker
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
